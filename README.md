@@ -28,6 +28,8 @@ List all tag list using active tag file.
 This command can be used in a very similar way to :Tags
 command from https://github.com/junegunn/fzf.vim.
 
+![TgsList demo](https://user-images.githubusercontent.com/6816040/77666322-2ac44380-6fc4-11ea-8630-fec4e2ead9bd.png)
+
 #### :Tgs
 
 Jump to current word definition using tags.
@@ -38,6 +40,8 @@ If you want to repace default tag jump key to this fucntion, try
 ```vim
 nnoremap <C-]> :Tgs<CR>
 ```
+
+![Tgs demo](https://user-images.githubusercontent.com/6816040/77666763-b342e400-6fc4-11ea-9d1f-289e4503a982.png)
 
 ## 3. Feature roadmap
 
