@@ -19,8 +19,12 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
-let s:bin_dir = expand('<sfile>:h:h') . '/bin/'
-let s:bin_presenter = s:bin_dir . 'presenter.py'
+let s:bin_dir = expand('<sfile>:h:h') . '/python3/bin/'
+
+"---------------------------------------
+" List
+"---------------------------------------
+let s:bin_list_ctags = s:bin_dir . 'list_ctags.py'
 
 function! tgs#get_source_cmd() abort
   let l:tags = tagfiles()
@@ -30,10 +34,12 @@ function! tgs#get_source_cmd() abort
   endif
 
   let l:tag = l:tags[0]
-  return printf('python3 %s %s', s:bin_presenter, l:tag)
+  return printf('python3 %s %s', s:bin_list_ctags, l:tag)
 endfunction
 
-function! tgs#sink_function(line) abort
+" This function is implemented by referring to
+" https://github.com/junegunn/fzf.vim
+function! tgs#list_sink_function(line) abort
   let l:elms = split(a:line, ': ')
   let l:filepath = l:elms[1]
   let l:pat = l:elms[2][:-3]
@@ -52,12 +58,55 @@ function! tgs#sink_function(line) abort
   endtry
 endfunction
 
-function! tgs#tags() abort
+function! tgs#list() abort
   let l:wrapped = fzf#wrap(extend({
         \ 'source': tgs#get_source_cmd(),
-        \ 'options': ['--ansi', '-d', ': ', '--nth', '1,2'],
-        \ 'sink': function('tgs#sink_function'),
+        \ 'options': ['--ansi', '-d', ': ', '--nth', '1,3'],
+        \ 'sink': function('tgs#list_sink_function'),
         \ }, get(g:, 'fzf_layout', {})))
   call fzf#run(l:wrapped)
 endfunction
 
+"---------------------------------------
+" Jump
+"---------------------------------------
+"
+python3 << EOF
+import vim
+from tgs_vim_if import *
+EOF
+
+function! tgs#jump_sink_function(line) abort
+  let l:elms = split(a:line, ': ')
+  let l:count = l:elms[0]
+  let l:icon_and_name = l:elms[1]
+  let l:name = split(l:icon_and_name, ' ')[1]
+  execute printf('%s tag %s', l:count, l:name)
+endfunction
+
+function! tgs#jump() abort
+  let l:word = expand('<cword>')
+  echom 'l:word: ' . string(l:word)
+  let l:candidate = taglist(printf('^%s$', l:word))
+
+  if empty(l:candidate)
+    " Case for no tag was found.
+    echom printf('No tag was found for `%s`', l:word)
+  endif
+
+  if len(l:candidate) == 1
+    " Jump to an single tag found.
+    execute 'tag' l:word
+    return
+  endif
+
+  " Select tag to jump from multiples tags found.
+  let l:py_expr = 'get_source_from_candidates(' . string(l:candidate) . ')'
+  let l:source = py3eval(l:py_expr)
+  let l:wrapped = fzf#wrap(extend({
+        \ 'source': l:source,
+        \ 'options': ['--ansi', '-d', ': ', '--nth', '2,4'],
+        \ 'sink': function('tgs#jump_sink_function'),
+        \ }, get(g:, 'fzf_layout', {})))
+  call fzf#run(l:wrapped)
+endfunction

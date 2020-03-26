@@ -19,4 +19,6 @@
 " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 " SOFTWARE.
 
-command! Tgs :call tgs#tags()
+command! TgsList :call tgs#list()
+command! Tgs :call tgs#jump()
+
