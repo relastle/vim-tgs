@@ -86,12 +86,12 @@ endfunction
 
 function! tgs#jump() abort
   let l:word = expand('<cword>')
-  echom 'l:word: ' . string(l:word)
   let l:candidate = taglist(printf('^%s$', l:word))
 
   if empty(l:candidate)
     " Case for no tag was found.
     echom printf('No tag was found for `%s`', l:word)
+    return
   endif
 
   if len(l:candidate) == 1
