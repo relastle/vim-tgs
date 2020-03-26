@@ -71,12 +71,12 @@ class Tag:
     def to_line(self) -> str:
         """ Represent self as a line of fzf source.
         """
-        return '{} {}{}{}: {}{}{}{}: {}'.format(
+        return '{} {}{}{}: {}{}{}{}: {}{}{}'.format(
             NERD_FONT_MAP.get(self.decl_type, ICON_DEFAULT),
             Color.GREEN, self.name, Color.RESET,
             Color.CYAN, dirname(self.defined_path) + '/', Color.RESET,
             basename(self.defined_path),
-            self.decl_str,
+            Color.MAGENTA, self.decl_str, Color.RESET,
         )
 
     def to_candidate_line(self, count: int) -> str:
@@ -84,13 +84,13 @@ class Tag:
 
         It is used for tag jumping specifying its count.
         """
-        return '{}: {} {}{}{}: {}{}{}{}: {}'.format(
+        return '{}: {} {}{}{}: {}{}{}{}: {}{}{}'.format(
             count,
             NERD_FONT_MAP.get(self.decl_type, ICON_DEFAULT),
             Color.GREEN, self.name, Color.RESET,
             Color.CYAN, dirname(self.defined_path) + '/', Color.RESET,
             basename(self.defined_path),
-            self.decl_str,
+            Color.MAGENTA, self.decl_str, Color.RESET,
         )
 
     @classmethod
