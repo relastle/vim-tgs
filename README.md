@@ -46,7 +46,7 @@ nnoremap <C-]> :Tgs<CR>
 ## 3. Feature roadmap
 
 - [x] More colorful version of :Tags (c.f. https://github.com/junegunn/fzf.vim)
-- [x] Provide command for the purpose of replacing defualt tag jump ( <kbd>Ctrl</kbd> + <kbd>[</kbd> )
+- [x] Provide command for the purpose of replacing defualt tag jump ( <kbd>Ctrl</kbd> + <kbd>]</kbd> )
 - [ ] Push to tag stach when jumping to tag using :TgsList
 
 ## 4. Note
