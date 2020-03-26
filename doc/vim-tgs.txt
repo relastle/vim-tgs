@@ -1,0 +1,60 @@
+*vim-tgs.txt*	vim-tgs	Last change: Mar 15, 2020
+VIM-tgs - TABLE OF CONTENTS
+
+==============================================================================
+INTRODUCTION                                              *vim-tgs-introduction*
+
+https://github.com/relastle/vim-tgs
+
+🔖 More stylish tag operation in vim
+
+
+==============================================================================
+INSTALLATION                                              *vim-tgs-installation*
+
+Using vim-plug (https://github.com/junegunn/vim-plug)
+
+- 1. Add `Plug 'relastle/vim-tgs'` to .vimrc
+- 2. Run `:PlugInstall`
+
+==============================================================================
+REQUIREMENTS                                              *vim-tgs-requirements*
+
+vim-tgs requires that fzf(https://github.com/junegunn/fzf) is bundled.
+If needed, please install fzf(https://github.com/junegunn/fzf)
+
+- 1. Add `Plug 'junegunn/fzf'` to .vimrc
+- 2. Run `:PlugInstall`
+
+==============================================================================
+COMMANDS                                                      *vim-tgs-commands*
+
+
+|TgsList|                                                               *:TgsList*
+
+List all tag list using active tag file.
+This command can be used in a very similar way to :Tags
+command from https://github.com/junegunn/fzf.vim.
+
+
+|Tgs|                                                                       *:Tgs*
+
+Jump to current word definition using tags.
+If only one candidate is found, it make you jump to it.
+If multiple candidates are found, you can select using fzf interface.
+
+
+
+If you want to repace default tag jump key to this fucntion, try
+
+>
+  nnoremap <C-]> :Tgs<CR>
+>
+
+==============================================================================
+LICENSE                                                        *vim-tgs-license*
+
+MIT
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
