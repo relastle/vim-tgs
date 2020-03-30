@@ -29,8 +29,7 @@ let s:bin_list_ctags = s:bin_dir . 'list_ctags.py'
 function! tgs#get_source_cmd() abort
   let l:tags = tagfiles()
   if empty(l:tags)
-    echom 'Please make sure you have already created `tag` file'
-    return
+    return ''
   endif
 
   let l:tag = l:tags[0]
@@ -59,8 +58,13 @@ function! tgs#list_sink_function(line) abort
 endfunction
 
 function! tgs#list() abort
+  let l:cmd = tgs#get_source_cmd()
+  if empty(l:cmd)
+    echom 'Please make sure you have already created `tag` file'
+    return
+  endif
   let l:wrapped = fzf#wrap(extend({
-        \ 'source': tgs#get_source_cmd(),
+        \ 'source': l:cmd,
         \ 'options': ['--ansi', '-d', ': ', '--nth', '1,3'],
         \ 'sink': function('tgs#list_sink_function'),
         \ }, get(g:, 'fzf_layout', {})))
