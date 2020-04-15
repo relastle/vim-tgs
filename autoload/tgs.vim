@@ -39,7 +39,7 @@ endfunction
 " This function is implemented by referring to
 " https://github.com/junegunn/fzf.vim
 function! tgs#list_sink_function(line) abort
-  let l:elms = split(a:line, ': ')
+  let l:elms = split(a:line, ":\t")
   let l:filepath = l:elms[1]
   let l:pat = l:elms[2][:-3]
   if len(l:elms) < 4
@@ -65,7 +65,7 @@ function! tgs#list() abort
   endif
   let l:wrapped = fzf#wrap(extend({
         \ 'source': l:cmd,
-        \ 'options': ['--ansi', '-d', ': ', '--nth', '1,3'],
+        \ 'options': ['--ansi', '-d', ':\t', '--nth', '1..3'],
         \ 'sink': function('tgs#list_sink_function'),
         \ }, get(g:, 'fzf_layout', {})))
   call fzf#run(l:wrapped)
@@ -109,7 +109,7 @@ function! tgs#jump() abort
   let l:source = py3eval(l:py_expr)
   let l:wrapped = fzf#wrap(extend({
         \ 'source': l:source,
-        \ 'options': ['--ansi', '-d', ': ', '--nth', '2,4'],
+        \ 'options': ['--ansi', '-d', ': ', '--nth', '2..4'],
         \ 'sink': function('tgs#jump_sink_function'),
         \ }, get(g:, 'fzf_layout', {})))
   call fzf#run(l:wrapped)

@@ -71,7 +71,7 @@ class Tag:
     def to_line(self) -> str:
         """ Represent self as a line of fzf source.
         """
-        return '{} {}{}{}: {}{}{}{}: {}{}{}'.format(
+        return '{} {}{}{}:\t{}{}{}{}:\t{}{}{}'.format(
             NERD_FONT_MAP.get(self.decl_type, ICON_DEFAULT),
             Color.GREEN, self.name, Color.RESET,
             Color.CYAN, dirname(self.defined_path) + '/', Color.RESET,
