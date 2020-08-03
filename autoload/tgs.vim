@@ -90,7 +90,7 @@ endfunction
 
 function! tgs#jump() abort
   let l:word = expand('<cword>')
-  let l:candidate = taglist(printf('^%s$', l:word))
+  let l:candidate = taglist(printf('^%s$', l:word), expand('%:p'))
 
   if empty(l:candidate)
     " Case for no tag was found.

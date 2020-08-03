@@ -112,5 +112,9 @@ class Tag:
 
 
 def get_source_from_candidates(candidates: List[Dict[str, Any]]) -> List[str]:
+    """
+    Get fzf source (string of shell command)
+    from candidates obtained from `taglist` function of vim.
+    """
     tags = Tag.of_tag_candidates(candidates)
     return [tag.to_candidate_line(i + 1) for i, tag in enumerate(tags)]
